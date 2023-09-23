@@ -34,9 +34,9 @@ connection.query(
 connection.query(
   `
       CREATE TABLE IF NOT EXISTS author_research(
-          id INT PRIMARY KEY,  
           author_id INT,
           paper_id INT,
+          PRIMARY KEY (author_id, paper_id),
           FOREIGN KEY (author_id) REFERENCES authors(author_id),
           FOREIGN KEY (paper_id) REFERENCES research_papers(paper_id)
       )
@@ -56,16 +56,16 @@ connection.query(
        (2, 'Author 2', 'University E', '1963-01-17', 11, 'Male', NULL),
        (3, 'Author 3', 'University A', '1970-01-10', 7, 'Male', 1),
        (4, 'Author 4', 'University B', '1971-02-10', 5, 'Female', 1),
-       (5, 'Author 5', 'University C', '1972-03-10', 4, 'Male', 2),
-       (6, 'Author 6', 'University D', '1973-04-10', 2, 'Female', 2),
+       (5, 'Author 5', 'University C', '1972-03-10', 4, 'Other', 2),
+       (6, 'Author 6', 'University D', '1973-04-10', 2, 'Other', 2),
        (7, 'Author 7', 'University E', '1974-05-10', 6, 'Female', 1),
        (8, 'Author 8', 'University F', '1975-06-10', 3, 'Male', 1),
        (9, 'Author 9', 'University G', '1976-07-10', 3, 'Male', 2),
-       (10, 'Author 10', 'University B', '1977-08-10', 7, 'Male', 2),
+       (10, 'Author 10', 'University B', '1977-08-10', 7, 'Other', 2),
        (11, 'Author 11', 'University C', '1978-09-10', 8, 'Female', 3),
        (12, 'Author 12', 'University D', '1979-10-10', 3, 'Male', 3),
        (13, 'Author 13', 'University F', '1972-11-10', 5, 'Female', 4),
-       (14, 'Author 14', 'University G', '1975-12-10', 9, 'Female', 5),
+       (14, 'Author 14', 'University G', '1975-12-10', 9, 'Other', 5),
        (15, 'Author 15', 'University H', '1974-01-10', 4, 'Male', 6)
 `,
   (error) => {
@@ -152,7 +152,10 @@ connection.query(
     (29, 14, 27),
     (30, 14, 28),
     (31, 15, 29),
-    (32, 15, 30)
+    (32, 15, 30),
+    (33, 5, 1),
+    (34, 7, 17),
+    (35, 14, 10)
     `,
   (error) => {
     if (error) {

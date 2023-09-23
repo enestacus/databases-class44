@@ -29,14 +29,10 @@ connection.query(
 
 connection.query(
   `
-      SELECT SUM(rp_count) AS total_researches_by_female_authors
-      FROM (
-        SELECT COUNT(ar.paper_id) AS rp_count
-        FROM authors AS a
-        LEFT JOIN author_research AS ar ON a.author_id = ar.author_id
-        WHERE a.gender = 'Female'
-        GROUP BY a.author_id
-      ) AS female_research_counts`,
+  SELECT COUNT(DISTINCT ar.paper_id) AS total_researches_by_female_authors
+  FROM authors AS a
+  LEFT JOIN author_research AS ar ON a.author_id = ar.author_id
+  WHERE a.gender = 'Female'`,
   (err, results) => {
     if (err) throw err;
     console.log(
@@ -59,14 +55,10 @@ connection.query(
 
 connection.query(
   `
-      SELECT a.university, SUM(rp_count) AS total_researches
-      FROM authors AS a
-      LEFT JOIN (
-        SELECT ar.author_id, COUNT(ar.paper_id) AS rp_count
-        FROM author_research AS ar
-        GROUP BY ar.author_id
-      ) AS author_research_counts ON a.author_id = author_research_counts.author_id
-      GROUP BY a.university`,
+  SELECT a.university, COUNT(DISTINCT ar.paper_id) AS total_researches
+  FROM authors AS a
+  LEFT JOIN author_research AS ar ON a.author_id = ar.author_id
+  GROUP BY a.university`,
   (err, results) => {
     if (err) throw err;
     console.log("Total research per university logged!");
