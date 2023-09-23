@@ -32,8 +32,20 @@ async function transfer(fromAccount, toAccount, amount, remark) {
       return;
     }
 
-    const senderNextChangeNumber = sender.account_changes.length + 1;
-    const receiverNextChangeNumber = receiver.account_changes.length + 1;
+    const senderMaxChangeNumber = sender.account_changes.reduce(
+      (maxChangeNumber, change) =>
+        Math.max(maxChangeNumber, change.change_number),
+      0
+    );
+
+    const receiverMaxChangeNumber = receiver.account_changes.reduce(
+      (maxChangeNumber, change) =>
+        Math.max(maxChangeNumber, change.change_number),
+      0
+    );
+
+    const senderNextChangeNumber = senderMaxChangeNumber + 1;
+    const receiverNextChangeNumber = receiverMaxChangeNumber + 1;
 
     const senderChange = {
       change_number: senderNextChangeNumber,
