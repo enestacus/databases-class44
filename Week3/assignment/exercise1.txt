@@ -51,3 +51,8 @@
     PRIMARY KEY(dinner_id, food_code)
     dinner_id(FOREIGN KEY references Dinner table)
     food_code(FOREIGN KEY references Food table)
+
+-MemberDinner table
+    PRIMARY KEY(member_id, dinner_id)
+    member_id(FOREIGN KEY references Member table)
+    dinner_id(FOREIGN KEY references Dinner table)
